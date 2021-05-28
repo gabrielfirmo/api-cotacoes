@@ -50,8 +50,15 @@ public class StockService {
         return mapper.toDto(repository.findAll());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public StockDTO findById(Long id) {
         return repository.findById(id).map(mapper::toDto).orElseThrow(NotFoundException::new);
+    }
+
+    @Transactional
+    public StockDTO delete(Long id) {
+        StockDTO dto = this.findById(id);
+        repository.deleteById(dto.getId());
+        return dto;
     }
 }
