@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/stock")
 public class StockController {
@@ -43,6 +44,11 @@ public class StockController {
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StockDTO> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
+    }
+
+    @GetMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<StockDTO>>  findByToday(){
+        return ResponseEntity.ok(service.finByToday());
     }
 
 }
