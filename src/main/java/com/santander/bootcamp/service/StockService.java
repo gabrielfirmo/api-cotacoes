@@ -1,6 +1,7 @@
 package com.santander.bootcamp.service;
 
 import com.santander.bootcamp.exceptions.BusinessException;
+import com.santander.bootcamp.exceptions.NotFoundException;
 import com.santander.bootcamp.mapper.StockMapper;
 import com.santander.bootcamp.model.Stock;
 import com.santander.bootcamp.model.dto.StockDTO;
@@ -47,5 +48,10 @@ public class StockService {
     @Transactional(readOnly = true)
     public List<StockDTO> findAll() {
         return mapper.toDto(repository.findAll());
+    }
+
+    @Transactional
+    public StockDTO findById(Long id) {
+        return repository.findById(id).map(mapper::toDto).orElseThrow(NotFoundException::new);
     }
 }
